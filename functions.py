@@ -39,13 +39,14 @@ def grabbedObject(object_url, allowed_mimes, storage_profiles, object_new_refere
                 handler.write(data_request.content) # save binary data as object
                 handler.close()
             
-            # test if file actually exists. if true, compare hash
+            # test if file actually exists. if true, compare hash. if unique return else delete object
             if os.path.isfile(storage_path + object_final_reference):
                 object_md5 = hashlib.md5()
                 object_md5.update(open(storage_path + object_final_reference, 'rb').read())
                 md5_to_test = object_md5.hexdigest()
                 if isUniqueHash(md5_to_test):
                     return object_mime, object_final_reference, storage_path, storage_type
+                os.remove(storage_path + object_final_reference)
     except Exception as e:
         print(e)
 
@@ -80,12 +81,16 @@ def cropImage(object_storage_path, object_final_reference, object_mime, pixel_ad
 
 # manage transfer to S3
 def uploadToS3(object_storage_path, object_final_reference, object_mime, s3_bucket):
-    try:
-        s3 = boto3.resource('s3')
-        data = open(object_storage_path + object_final_reference, 'rb')
-        s3.Bucket(s3_bucket).put_object(Key=object_storage_path + object_final_reference, Body=data, ContentType=object_mime)
-    except Exception as e:
-        print(e)
+    if not s3_bucket:
+        print("skipping s3 upload, add bucket in config if desired...")
+    else:
+        # upload to s3 :X
+        try:
+            s3 = boto3.resource('s3')
+            data = open(object_storage_path + object_final_reference, 'rb')
+            s3.Bucket(s3_bucket).put_object(Key=object_storage_path + object_final_reference, Body=data, ContentType=object_mime)
+        except Exception as e:
+            print(e)
 
 # manage creation of still images from mp4 files
 def stillImageFromVideo(object_storage_path, object_final_reference, still_object_path, still_object_reference):
@@ -125,7 +130,7 @@ def storeObjectDetails(object_title, object_final_reference, object_type, site_t
         global cnx
         global cursor
         # inject object data into database
-        insert = ("INSERT INTO incoming_objects SET object_title = %s, object_reference = %s, object_type = %s, site_tag = %s, created_date = NOW()")
+        insert = ("INSERT INTO objects_grabbed SET object_title = %s, object_reference = %s, object_type = %s, site_tag = %s, created_date = NOW()")
         cursor.execute(insert, (object_title, object_final_reference, object_type, site_tag))
         cnx.commit()
     except Exception as e:
