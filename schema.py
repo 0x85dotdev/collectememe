@@ -5,8 +5,8 @@ from config import mysql_op
 DB_NAME = 'collectememe'
 
 TABLES = {}
-TABLES['incoming'] = (
-    "CREATE TABLE `incoming_objects` ("
+TABLES['objects_grabbed'] = (
+    "CREATE TABLE `objects_grabbed` ("
     "  `object_id` int(11) NOT NULL AUTO_INCREMENT,"
     "  `object_title` text DEFAULT NULL,"
     "  `object_reference` text NOT NULL,"
