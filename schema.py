@@ -12,7 +12,7 @@ TABLES['objects_grabbed'] = (
     "  `object_reference` text NOT NULL,"
     "  `object_type` tinyint NOT NULL,"
     "  `object_status` tinyint DEFAULT 0,"
-    "  `site_tag` varchar(24) NOT NULL,"
+    "  `site_tag` varchar(140) NOT NULL,"
     "  `created_date` datetime NOT NULL,"
     "  PRIMARY KEY (`object_id`)"
     ") ENGINE=InnoDB")
