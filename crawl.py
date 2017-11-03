@@ -15,7 +15,7 @@ if 'video/mp4' in allowed_mimes:
         sys.exit(0)
 
 # make sure if uploading to s3 that aws-cli (aws) is installed
-if not storage_profiles['s3_bucket']:
+if not stash_in_s3:
     aws_cli_path = subprocess.run(['which', 'aws'], stdout=subprocess.PIPE).stdout.decode('utf-8')
     if not aws_cli_path:
         print("no aws-cli installed, can't upload to s3!")
