@@ -14,6 +14,7 @@ TABLES['objects_grabbed'] = (
     "  `object_status` tinyint DEFAULT 0,"
     "  `site_tag` varchar(140) NOT NULL,"
     "  `created_date` datetime NOT NULL,"
+    "  `updated_at` datetime NOT NULL,"
     "  PRIMARY KEY (`object_id`)"
     ") ENGINE=InnoDB")
 
