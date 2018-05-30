@@ -1,0 +1,32 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+"beautifulsoup4" = "==4.6.0"
+"boto3" = "==1.4.7"
+botocore = "==1.7.16"
+certifi = "==2017.7.27.1"
+chardet = "==3.0.4"
+docutils = "==0.14"
+idna = "==2.6"
+jmespath = "==0.9.3"
+mysql-connector-python-rf = "==2.2.2"
+olefile = "==0.44"
+pillow = "==4.2.1"
+praw = "*"
+prawcore = "*"
+python-dateutil = "==2.6.1"
+requests = "==2.18.4"
+"s3transfer" = "==0.1.11"
+six = "==1.11.0"
+update-checker = "==0.16"
+"urllib3" = "==1.22"
+
+[dev-packages]
+pylint = "*"
+"autopep8" = "*"
+
+[requires]
+python_version = "3.6"
